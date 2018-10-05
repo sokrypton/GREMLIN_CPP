@@ -19,7 +19,7 @@ $ ./gremlin_cpp -i alignment_file -o results
 #  Optional settings
 # ---------------------------------------------------------------------------------------------
 #   -only_v       only compute v (1body-term)                    [Default=0]
-#   -gap_cutoff   remove positions with > X fraction gaps        [Default=1]
+#   -gap_cutoff   remove positions with > X fraction gaps        [Default=0.5]
 #   -alphabet     select: [protein|rna|binary]                   [Default=protein]
 #   -eff_cutoff   seq id cutoff for downweighting similar seqs   [Default=0.8]
 #   -lambda       L2 regularization weight                       [Default=0.01]
