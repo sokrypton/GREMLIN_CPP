@@ -1,4 +1,4 @@
-# GREMLIN_H
+# GREMLIN_CPP v1.0
 
 ### Installation
 ```sh
@@ -11,7 +11,7 @@ Note, openmp uses the system variable ```OMP_NUM_THREADS``` to decide how many t
 $ export OMP_NUM_THREADS=16
 $ ./gremlin_cpp -i alignment_file -o results
 # ---------------------------------------------------------------------------------------------
-#                                GREMLIN_CPP
+#                                GREMLIN_CPP v1.0
 # ---------------------------------------------------------------------------------------------
 #   -i            input alignment (either one sequence per line or in fasta format)
 #   -o            save output to

@@ -937,7 +937,7 @@ void Opt::get(string_1D &arg)
 	
 	if(error){
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
-		cout << "#                                GREMLIN_CPP                                                   " << endl;
+		cout << "#                                GREMLIN_CPP v1.0                                              " << endl;
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 		cout << "#   -i            input alignment (either one sequence per line or in fasta format)"             << endl;
 		cout << "#   -o            save output to"                                                                << endl;
@@ -963,7 +963,7 @@ void Opt::get(string_1D &arg)
 	}
 	else{
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
-		cout << "#                                GREMLIN_CPP                                                   " << endl;
+		cout << "#                                GREMLIN_CPP v1.0                                              " << endl;
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 		cout << "#   -i           " << msa_i            << endl;
 		cout << "#   -o           " << preds_out        << endl;
@@ -985,4 +985,3 @@ void Opt::get(string_1D &arg)
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 	}
 }
-
