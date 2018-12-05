@@ -2,7 +2,7 @@
 
 ### UPDATE
 We now have an exact implemention of this code in tensorflow!
-https://colab.research.google.com/github/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
+https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
 
 ### Installation
 ```sh
