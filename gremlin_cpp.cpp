@@ -1,3 +1,23 @@
+/*
+------------------------------------------------------------
+"THE BEERWARE LICENSE" (Revision 42):
+ <so@g.harvard.edu>  wrote this code. As long as you retain this
+ notice, you can do whatever you want with this stuff. If we meet
+ someday, and you think this stuff is worth it, you can buy me a 
+ beer in return. --Sergey Ovchinnikov
+ ------------------------------------------------------------
+ If you use this code, please cite the following papers:
+
+ Balakrishnan, Sivaraman, Hetunandan Kamisetty, Jaime G. Carbonell,
+ Su‐In Lee, and Christopher James Langmead.
+ "Learning generative models for protein fold families."
+ Proteins: Structure, Function, and Bioinformatics 79, no. 4 (2011): 1061-1078.
+
+ Kamisetty, Hetunandan, Sergey Ovchinnikov, and David Baker.
+ "Assessing the utility of coevolution-based residue–residue
+ contact predictions in a sequence-and structure-rich era."
+ Proceedings of the National Academy of Sciences (2013): 201314045.
+ */
 #include <stdio.h>
 #include <iostream>
 #include <vector>
@@ -78,6 +98,7 @@ public:
 	double eff_cutoff = 0.8;
 	double lambda = 0.01;
 	bool only_v = 0;
+	bool only_neff = 0;
 	void get(string_1D &arg);
 };
 
@@ -118,6 +139,8 @@ int main(int argc, const char * argv[]) {
 
 	// get effective weight for each sequence
 	msa.get_eff(opt.eff_cutoff);
+
+	if(opt.only_neff){exit(0);}
 
 	// get entropy
 	msa.get_H(opt.only_v);
@@ -553,6 +576,8 @@ void Msa::load(string msa_i, string alphabet, double gap){
 	
 	X.resize(nrow,int_1D());
 	
+	string seq_str = "";
+	string cut_str = "";
 	int c = 0;
 	for(int i = 0; i < ncol; i++){
 		int gaps = 0;
@@ -563,10 +588,14 @@ void Msa::load(string msa_i, string alphabet, double gap){
 			for(int n = 0; n < nrow; n++){
 				X[n].push_back(X_tmp[n][i]);
 			}
+			seq_str += int2aa(X_tmp[0][i],alphabet);
+			cut_str += int2aa(X_tmp[0][i],alphabet);
 			c2f.push_back(i);
 			f2c.push_back(c);
 			c++;
 		}else{
+			seq_str += int2aa(X_tmp[0][i],alphabet);
+			cut_str += "-";
 			f2c.push_back(-1);
 		}
 	}
@@ -574,6 +603,9 @@ void Msa::load(string msa_i, string alphabet, double gap){
 	if(pos_rm > 0){
 		cout << "# removing " << pos_rm << " out of " << ncol << " positions with >= " << gap*100 << "% gaps!" << endl;
 	}
+
+	cout << "# SEQ " << seq_str << endl;
+	cout << "# CUT " << cut_str << endl;
 
 	// compute size of various vectors
 	nr = X.size();
@@ -603,7 +635,8 @@ void Msa::get_eff(double cutoff){
 		eff[n] = 1.0/(double)w;
 	}
 	neff = vec_sum(eff);
-	cout << "# nc: " << nc << " neff: " << neff << endl;
+	cout << "# NC " << nc << endl;
+	cout << "# NEFF " << neff << endl;
 }
 void Msa::get_H(bool only_v){
 	if(only_v){
@@ -886,9 +919,12 @@ void Opt::get(string_1D &arg)
 			else if(val == "-only_v"    ){
 				if(a+1 < arg.size() and arg[a+1][0] != '-'){
 					only_v = stoi(arg[a+1]); a++;
-				}else{
-					only_v = 1;
-				}
+				}else{only_v = 1;}
+			}
+			else if(val == "-only_neff" ){
+				if(a+1 < arg.size() and arg[a+1][0] != '-'){
+					only_neff = stoi(arg[a+1]); a++;
+				}else{only_neff = 1;}
 			}
 		}
 	}
@@ -902,7 +938,7 @@ void Opt::get(string_1D &arg)
 		eout << "# ERROR: -i " << msa_i << endl;
 		error = 1;
 	}
-	if(preds_out.empty()){
+	if(preds_out.empty() and !only_neff){
 		eout << "# ERROR: -o " << preds_out << endl;
 		error = 1;
 	}
@@ -944,6 +980,7 @@ void Opt::get(string_1D &arg)
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 		cout << "#  Optional settings                                                                           " << endl;
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
+		cout << "#   -only_neff    only compute neff (effective num of seqs)      [Default=" << only_neff  << "]" << endl;
 		cout << "#   -only_v       only compute v (1body-term)                    [Default=" << only_v     << "]" << endl;
 		cout << "#   -gap_cutoff   remove positions with > X fraction gaps        [Default=" << gap_cutoff << "]" << endl;
 		cout << "#   -alphabet     select: [protein|rna|binary]                   [Default=" << alphabet   << "]" << endl;
@@ -961,13 +998,15 @@ void Opt::get(string_1D &arg)
 		if(arg.size() > 0){cout << eout.str();}
 		exit(1);
 	}
-	else{
+	else if (!only_neff)
+	{
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 		cout << "#                                GREMLIN_CPP v1.0                                              " << endl;
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
 		cout << "#   -i           " << msa_i            << endl;
 		cout << "#   -o           " << preds_out        << endl;
 		cout << "# ---------------------------------------------------------------------------------------------" << endl;
+		cout << "#   -only_neff   " << only_neff        << endl;
 		cout << "#   -only_v      " << only_v           << endl;
 		cout << "#   -gap_cutoff  " << gap_cutoff       << endl;
 		cout << "#   -alphabet    " << alphabet         << endl;
