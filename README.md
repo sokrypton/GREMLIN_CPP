@@ -1,5 +1,9 @@
 # GREMLIN_CPP v1.0
 
+### UPDATE
+We now have an exact implemention of this code in tensorflow!
+https://colab.research.google.com/github/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
+
 ### Installation
 ```sh
 $ g++ -O3 -std=c++0x -o gremlin_cpp gremlin_cpp.cpp -fopenmp
@@ -11,13 +15,14 @@ Note, openmp uses the system variable ```OMP_NUM_THREADS``` to decide how many t
 $ export OMP_NUM_THREADS=16
 $ ./gremlin_cpp -i alignment_file -o results
 # ---------------------------------------------------------------------------------------------
-#                                GREMLIN_CPP v1.0
+#                                GREMLIN_CPP v1.0                                              
 # ---------------------------------------------------------------------------------------------
 #   -i            input alignment (either one sequence per line or in fasta format)
 #   -o            save output to
 # ---------------------------------------------------------------------------------------------
-#  Optional settings
+#  Optional settings                                                                           
 # ---------------------------------------------------------------------------------------------
+#   -only_neff    only compute neff (effective num of seqs)      [Default=0]
 #   -only_v       only compute v (1body-term)                    [Default=0]
 #   -gap_cutoff   remove positions with > X fraction gaps        [Default=0.5]
 #   -alphabet     select: [protein|rna|binary]                   [Default=protein]
@@ -27,7 +32,7 @@ $ ./gremlin_cpp -i alignment_file -o results
 #   -mrf_o        save MRF
 #   -pair_i       load list of residue pairs (one pair per line, index 0)
 # ---------------------------------------------------------------------------------------------
-#  Minimizer settings
+#  Minimizer settings                                                                          
 # ---------------------------------------------------------------------------------------------
 #   -min_type     select: [lbgfs|cg|none]                        [Default=lbfgs]
 #   -max_iter     number of iterations                           [Default=100]
