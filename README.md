@@ -1,12 +1,5 @@
 # GREMLIN_CPP v1.0
 
-### UPDATE
-We now have an exact implemention of this code in tensorflow!
-https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
-
-### MATLAB (original version)
-https://github.com/sokrypton/GREMLIN
-
 ### Installation
 ```sh
 $ g++ -O3 -std=c++0x -o gremlin_cpp gremlin_cpp.cpp -fopenmp
@@ -59,3 +52,8 @@ The order of the values is as follows: "ARNDCQEGHILKMFPSTWYV-" (where "-" is the
 For RNA the order is "AUCG-", with 5 values for V and 5x5 for W.
 
 For Binary the order is "01-", with 3 values for V and 3x3 for W.
+
+### Alternative implementations
+- Python/Tensorflow https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
+- MATLAB https://github.com/sokrypton/GREMLIN
+- CUDA https://github.com/soedinglab/CCMpred
