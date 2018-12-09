@@ -4,6 +4,9 @@
 We now have an exact implemention of this code in tensorflow!
 https://github.com/sokrypton/GREMLIN_CPP/blob/master/GREMLIN_TF.ipynb
 
+### MATLAB (original version)
+https://github.com/sokrypton/GREMLIN
+
 ### Installation
 ```sh
 $ g++ -O3 -std=c++0x -o gremlin_cpp gremlin_cpp.cpp -fopenmp
